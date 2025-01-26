@@ -1,0 +1,11 @@
+*bin
+qemu*
+secon*
+orig*
+ignore/
+test/
+testmk
+vga_buffers.rs
+build/
+
+kernel/target
