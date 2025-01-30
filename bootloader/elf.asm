@@ -1,4 +1,3 @@
-; elf.asm
 [bits 32]
 
 ; ELF Header constants
@@ -30,11 +29,9 @@ load_elf:
     ; ebp+8 contains ELF file address
     mov esi, [ebp+8]   
     
-    ; Verify ELF magic number
     cmp dword [esi], 0x464C457F  ; "\x7FELF"
     jne .error
     
-    ; Check for 64-bit
     cmp byte [esi+4], ELFCLASS64
     jne .error
     
@@ -42,9 +39,8 @@ load_elf:
     mov eax, [esi+ELF_ENTRY]
     mov [kernel_entry], eax
     
-    ; Get program header information
-    mov edx, [esi+ELF_PHOFF]     ; Program header offset
-    movzx ecx, word [esi+ELF_PHNUM] ; Number of program headers
+    mov edx, [esi+ELF_PHOFF]    
+    movzx ecx, word [esi+ELF_PHNUM] 
     
 .load_segments:
     push ecx
@@ -59,15 +55,14 @@ load_elf:
     mov ebx, [esi+edx+PH_VADDR]   ; Virtual address
     mov ecx, [esi+edx+PH_FILESZ]  ; Size in file
     
-    ; Copy segment
     push esi
-    add esi, eax        ; Source = file + offset
-    mov edi, ebx        ; Destination = virtual address
-    rep movsb           ; Copy ecx bytes
+    add esi, eax       
+    mov edi, ebx       
+    rep movsb          
     pop esi
     
 .next_segment:
-    add edx, 56         ; Size of program header
+    add edx, 56         
     pop ecx
     loop .load_segments
     
@@ -76,9 +71,9 @@ load_elf:
     ret
 
 .error:
-    mov eax, 1          ; Return error
+    mov eax, 1          
     mov esp, ebp
     pop ebp
     ret
 
-kernel_entry: dd 0      ; Storage for entry point
+kernel_entry: dd 0   

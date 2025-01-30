@@ -2,8 +2,8 @@
 [org 0x7c00]
 
 ; Constants
-KERNEL_OFFSET    equ 0x1000      ; Load kernel at 0x1000 instead of 0x100000
-STACK_ADDR       equ 0x9000      ; Stack at 0x9000 instead of 0x90000
+KERNEL_OFFSET    equ 0x1000      
+STACK_ADDR       equ 0x9000      
 
 start:
     ; Save boot drive number

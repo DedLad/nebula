@@ -1,13 +1,13 @@
 [bits 16]
 print_string:
     pusha
-    mov ah, 0x0e        ; BIOS tele-type output
+    mov ah, 0x0e        
 .loop:
-    mov al, [bx]        ; Load character
-    cmp al, 0           ; Check for string end (null terminator)
+    mov al, [bx]        
+    cmp al, 0           
     je .done
-    int 0x10            ; Print character
-    add bx, 1           ; Next character
+    int 0x10            
+    add bx, 1           
     jmp .loop
 .done:
     popa
